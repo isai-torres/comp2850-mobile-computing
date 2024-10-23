@@ -46,17 +46,18 @@ class VCardScreen extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 50,
-                    backgroundImage: AssetImage('#'), // Imagen de perfil
+                    backgroundImage: AssetImage(
+                        'assets/imagen-perfil.png'), // Imagen de perfil
                   ),
                   SizedBox(height: 20),
                   Text(
-                    'Nombre del Estudiante',
+                    'Isai L Torres',
                     style: GoogleFonts.lato(
                         fontSize: 28, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 10),
                   Text(
-                    'email@ejemplo.com',
+                    'isai-email@gmail.com',
                     style: GoogleFonts.openSans(fontSize: 16),
                   ),
                   SizedBox(height: 5),
@@ -66,14 +67,14 @@ class VCardScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 5),
                   Text(
-                    'github/username',
+                    'github/isai-torres',
                     style:
                         GoogleFonts.openSans(fontSize: 16, color: Colors.blue),
                   ),
                   SizedBox(height: 20),
                   Image.asset(
                     // Qr code
-                    '#',
+                    'assets/qr-code.png',
                     width: 100,
                     height: 100,
                   ),
@@ -83,7 +84,7 @@ class VCardScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          'Usuario de Github: Username',
+                          'Usuario de Github: isai-torres',
                           style: GoogleFonts.openSans(fontSize: 16),
                           textAlign: TextAlign.center,
                         ),

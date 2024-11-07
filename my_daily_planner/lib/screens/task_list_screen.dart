@@ -24,9 +24,26 @@ class _TaskListScreenState extends State<TaskListScreen> {
             trailing: IconButton(
               icon: Icon(Icons.delete),
               onPressed: () {
-                setState(() {
-                  tasks.removeAt(index);
-                });
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Eliminar Tarea'),
+                        content: Text('Estas Seguro de eliminar esta tarea?'),
+                        actions: [
+                          TextButton(
+                              child: Text('Eliminar'),
+                              onPressed: () {
+                                setState(() {
+                                  tasks.removeAt(index);
+                                });
+                                Navigator.of(context).pop();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('Tarea eliminada')));
+                              }),
+                        ],
+                      );
+                    });
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text('Tarea eliminada')),
                 );

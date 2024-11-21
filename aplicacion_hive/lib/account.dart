@@ -19,11 +19,15 @@ class Account {
   @HiveField(4)
   DateTime createdAt;
 
+  @HiveField(5) // Nuevo campo
+  String? updateHistory;
+
   Account({
     required this.serviceName,
     required this.serviceType,
     required this.userName,
     required this.password,
     required this.createdAt,
+    this.updateHistory,
   });
 }

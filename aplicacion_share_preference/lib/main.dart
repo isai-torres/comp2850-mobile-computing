@@ -13,6 +13,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   bool isDarkMode = false;
   String userName = "";
+  String preferredLanguage = "español"; // Idioma predeterminado
   late TextEditingController _controller;
 
   @override
@@ -33,6 +34,7 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       isDarkMode = prefs.getBool('isDarkMode') ?? false;
       userName = prefs.getString('userName') ?? "";
+      preferredLanguage = prefs.getString('preferredLanguage') ?? "español";
       _controller.text = userName;
     });
   }
@@ -45,6 +47,25 @@ class _MyAppState extends State<MyApp> {
   Future<void> _saveUserName(String name) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('userName', name);
+  }
+
+  Future<void> _saveLanguagePreference(String language) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('preferredLanguage', language);
+  }
+
+  Future<void> _resetPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear(); // Borra todas las preferencias almacenadas
+    setState(() {
+      isDarkMode = false;
+      userName = "";
+      preferredLanguage = "español";
+      _controller.clear();
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Preferencias restablecidas.')),
+    );
   }
 
   @override
@@ -95,6 +116,20 @@ class _MyAppState extends State<MyApp> {
                   ],
                 ),
                 const SizedBox(height: 20),
+                DropdownButton<String>(
+                  value: preferredLanguage,
+                  items: const [
+                    DropdownMenuItem(value: "español", child: Text("Español")),
+                    DropdownMenuItem(value: "inglés", child: Text("Inglés")),
+                  ],
+                  onChanged: (value) {
+                    setState(() {
+                      preferredLanguage = value!;
+                      _saveLanguagePreference(preferredLanguage);
+                    });
+                  },
+                ),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     _saveUserName(userName);
@@ -104,7 +139,12 @@ class _MyAppState extends State<MyApp> {
                       ),
                     );
                   },
-                  child: Text("Guardar Preferencias"),
+                  child: const Text("Guardar Preferencias"),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: _resetPreferences,
+                  child: const Text("Restablecer Preferencias"),
                 ),
               ],
             ),
